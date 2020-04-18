@@ -1,0 +1,46 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+  {% if error %}
+    <div class="alert alert-danger">
+      {{ error.text }}
+    </div>
+  {% endif %}
+<h1>Fill Details</h1>
+<h5>Also use your registered email id to send e-mail!!</h5>
+<form method="POST" action="{% url 'details' %}" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="form-group">
+    Enter Full Name:
+    <br>
+    <input type="text" name="nam" value="">
+  </div>
+  <div class="form-group">
+    Enter regsitered Email:
+    <br>
+    <input type="email" name="email" placeholder="abc@thapar.edu">
+  </div>
+  <div class="form-group">
+    Enter Registeration Number :
+    <br>
+    <input type="text" name="roll" value="">
+  </div>
+  <div class="form-group">
+    Select your current Hostel:
+    <select name='Hostel' class="form-control">
+      <option value=1>A</option>
+      <option value=2>J</option>
+      <option value=3>M</option>
+      <option value=4>FRD</option>
+      <option value=5>K</option>
+      <option value=6>L</option>
+      <option value=7>B</option>
+      <option value=8>C</option>
+    </select>
+  </div>
+  <!-- <div class="form-group">
+    Balance:
+    <input class="form-control" type="text" placeholder="0" readonly>
+  </div> -->
+  <input type="submit" name="submit" value="Send Email">
+</form>
+{% endblock content %}

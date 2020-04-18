@@ -1,0 +1,29 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+{% block navitems %}
+<ul class="navbar-nav ml-auto">
+  <li class="nav-item active"><a href="{% url 'menu_today' user %}" class="nav-link">Today's Menu</a></li>
+  <li><a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout <strong>{{user.username}}</strong></a>
+    <form class="" id="logout" action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden"  value="">
+    </form></li>
+</ul>
+{% endblock navitems %}
+{% block content %}
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center mb-3 pb-3">
+          <div class="col-md-12 heading-section text-center ftco-animate">
+            <span class="subheading"><a href="#">Hostel Buddies Presents</a></span>
+            <h5>Your Total sale for the day :</h5>
+            <h6>Rs. {{total}}</h6>
+
+
+        </div>
+      </div>
+    </section>
+
+  </body>
+  {% endblock content %}
+</html>

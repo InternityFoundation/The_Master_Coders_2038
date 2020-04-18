@@ -1,0 +1,233 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="generator" content="Jekyll v3.8.5">
+  <title>Covid19</title>
+
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'homepage/css/base.css' %}">
+  <link href="{% static 'open-iconic/font/css/open-iconic-bootstrap.css' %}" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
+
+
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+  a { color: #94041c; } /* CSS link color */
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+  </style>
+  <!-- Custom styles for this template -->
+</head>
+<body style="background-color:white;">
+  <div class="bg">
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top p-3 mb-5 bg-dark">
+
+        <a class="navbar-brand" href="{% url 'master_home' %}">
+          <img src="{% static 'homepage/covid.jpeg' %}" width="30" height="30" class="d-inline-block align-top hovernow" style="border-radius:50%;" alt="">
+          <span class="title-custom">Covid19</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        {% block navitems %}
+        <ul class="navbar-nav ml-auto">
+          <li><a class="nav-item nav-link" href="{% url 'allblogs' %}">Official Blog</a></li>
+          {% if user.is_authenticated %}
+          <!-- <li><a class="nav-item nav-link" href="{% url 'details' %}">Edit Details</a></li> -->
+          <li><a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout <strong>{{user.username}}</strong></a></li>
+          {% endif %}
+        </ul>
+        <form class="" id="logout" action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden"  value="">
+        </form>
+        {% endblock navitems %}
+          </nav>
+      </div>
+    </header>
+
+      <div class="container mx-auto " style="padding-bottom:100px;">
+        {% block content %}
+        {% if user.is_authenticated %}
+        <br>
+        welcome
+        <!-- <div class="jumbotron hovernow">
+          <div class="row">
+            <div class="col-8">
+              <h2>Wanna choose Default Camera?</h2>
+            </div>
+            <div class="col-2">
+              <a href="{% url 'mcms_home' %}" class="btn btn-success my-2 button-custom">Default</a>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="jumbotron hovernow">
+          <div class="row">
+            <div class="col-8">
+              <h2>Wanna uplaod a Video?</h2>
+            </div>
+            <div class="col-2">
+              <a href="{% url 'hcs_home' %}" class="btn btn-danger my-2 button-custom">Upload</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% elif user.is_authenticated and perms.app.change_student %}
+        <br>
+        <br>
+        <div class="jumbotron hovernow">
+          <div class="row">
+            <div class="col-8">
+              <h2>Wanna check E-challan Details!!</h2>
+            </div>
+            <div class="col-2">
+              <a href="{% url 'mcms_home' %}" class="btn btn-success my-2 button-custom">Check details</a>
+            </div>
+          </div>
+        </div> -->
+      {% else %}
+      {% if error %}
+
+      <div class="alert alert-danger" role="alert">
+        {{error.text}}
+      </div>
+      {% endif %}
+
+      <div class="mx-auto jumborton hovernow border border-danger" style="padding:3em;width:370px; height:370px;margin:3em;">
+        <form action="{% url 'login' %}" method="POST">
+          {% csrf_token %}
+          <h5>Account Login</h5>
+
+          <div class="form-group">
+            Username:
+            <br>
+            <input type="text" name="username">
+          </div>
+          <div class="form-group">
+            Password:
+            <br>
+            <input type="password" name="password">
+          </div>
+          <input class="btn btn-danger" type="submit" name="submit" value="Sign in!">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="{% url 'signup' %}" class="btn btn-danger">Sign Up</a>
+        </form>
+        <br>
+        <a href="{% url 'forgot' %}" class="btn btn-warning">Forgot Password</a>
+        <br>
+        <br>
+      </div>
+       <div class="jumbotron hovernow">
+        <div class="row">
+          <div class="col-8">
+            <h2>Have a Question ?</h2>
+            <ul style="list-style-type:none;">
+              <li><b>Contact Information : </b></li>
+              <li>Aniket Gupta : +91-7015072644</li>
+              <li>Nishant Goel : +91-9034935854</li>
+              
+              <!-- <li>Navkiran : +91-9988477504</li> -->
+            </ul>
+          </div>
+          <div class="col-2">
+            <a href="mailto:nishant.goel195@gmail.com" class="btn btn-danger my-2 button-custom">Email Us</a>
+          </div>
+        </div>
+      </div>
+
+      {% endif %}
+      {% endblock content %}
+
+    </div>
+
+  </div>
+
+  <footer class="footer fixed-bottom">
+
+
+    <div class="container">
+
+      <div class="row">
+          <div class="mouse">
+            <a href="#" class="mouse-icon">
+              <div class="mouse-wheel"><span class="ion-ios-arrow-up"></span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <br> <br>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <p>
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> | Made with <i class="icon-heart" aria-hidden="true"></i> by <a href="{% url 'about' %}" target="_blank">The Master Coders</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+<script type="text/javascript" src="{% static 'homepage/js/base.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+
+<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'js/aos.js' %}"></script>
+<script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+<script src="{% static 'js/scrollax.min.js' %}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="{% static 'js/google-map.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

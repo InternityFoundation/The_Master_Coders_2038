@@ -1,0 +1,58 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+{% block navitems %}
+<ul class="navbar-nav ml-auto">           
+  <li><a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout <strong>{{user.username}}</strong></a>
+    <form class="" id="logout" action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden"  value="">
+    </form></li>
+</ul>
+{% endblock navitems %}
+{% block content %}
+    <section class="ftco-section">
+
+        <div class="row justify-content-center">
+
+
+          <div class="col-xl-5">
+            <div class="row mt-5 pt-3">
+              <div class="col-md-12 d-flex mb-5">
+                <div class="cart-detail cart-total p-3 p-md-4">
+                  <h6 class="billing-heading mb-4">Search results for "{{search_term}}"</h6>
+                      {% if students %}
+                      {% for use in students %}
+                      <p class="d-flex">
+                    <span>Name</span>
+                    <span>{{use.name}}</span>
+                  </p>
+                  <p class="d-flex">
+                    <span>Mobile</span>
+                    <span>+91-{{use.phone}}</span>
+                  </p>
+                  <p class="d-flex">
+                    <span>E-mail Address</span>
+                    <span>{{use.email}}</span>
+                  </p>
+                  <p class="d-flex total-price">
+                    <span>Wallet Balance</span>
+                    <span>Rs. {{ use.balance }} </span>
+                      <form class="form-inline my-2" action="{% url 'upbal' use.phone %}" method="GET">
+                      <input
+                        class="form-control search-box"
+                        type="update"
+                        placeholder="Enter amount to add...."
+                        name="update_term"
+                        value="{{update_term}}"
+                      />
+                    </form>
+                  </p>
+                  {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+</section>
+
+  </body>
+  {% endblock content %}
+</html>

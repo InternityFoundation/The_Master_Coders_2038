@@ -1,0 +1,82 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+{% block navitems %}
+<ul class="navbar-nav ml-auto">
+  <li class="nav-item"><a href="{% url 'totalsale' %}" class="nav-link">Total Sale</a></li>
+  <li><a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout <strong>{{user.username}}</strong></a>
+    <form class="" id="logout" action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden"  value="">
+    </form></li>
+</ul>
+{% endblock navitems %}
+{% block content %}
+    <section class="ftco-section ftco-cart">
+      <div class="container">
+        <div class="row justify-content-center mb-3 pb-3">
+          <div class="col-md-12 heading-section text-center ftco-animate">
+            <span class="subheading"><a href="#">Hostel Buddies Presents</a></span>
+            <h2 class="mb-4">Aaj ka Menu </h2>
+            </div>
+        </div>
+      </div>
+      {{All_items}}
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 ftco-animate">
+            <div class="cart-list">
+              <table class="table">
+                <style>
+
+                a { color: #94041c; } /* CSS link color */
+  
+                th {
+                background-color: #94041c;
+                color: white;
+                }
+                </style>
+                <thead class="thead-primary">
+                  <tr class="text-center">
+                    <th>Sr. No.</th>
+                    <th>Product Id</th>
+                    <th>Product name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                  </tr>
+                </thead>
+                <body>
+                  {% for item_menu in menu %}
+                      <tr class="text-center mx-auto cardbody hovernow border border-danger" style="padding:3em;height:100px;margin:3em;">
+                        <td scope="row">{{ forloop.counter }}</td>
+                        <td>{{ item_menu.id }}</td>
+                        <td>{{ item_menu.item_name }}</td>
+
+                        <td>Rs. {{ item_menu.price }}</td>>
+                        <td class="quantity">
+
+                      <form class="form-inline my-2" action="{% url 'mcms_update' item_menu.id %}" method="GET">
+                      <input
+                        class="form-control search-box"
+                        type="update"
+                        placeholder="{{ item_menu.quantity }}"
+                        name="update_term"
+                        value="{{update_term}}"
+                      />
+
+                    </form>
+                    </td>
+                      </tr>
+                    {% endfor %}
+                </tr><!-- END TR-->
+               </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+          </div>
+      </div>
+    </section>
+
+  </body>
+  {% endblock content %}
+</html>

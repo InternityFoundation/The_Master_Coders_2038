@@ -1,0 +1,79 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+<section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center mb-3 pb-3">
+          <div class="col-md-12 heading-section text-center ftco-animate">
+            <span class="subheading"><a href="#">CopVision Presents</a></span>
+            <h1>List of Rule Violators</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert" style="text-align:center">
+                <h6>{{ message }}</h6>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="cart-list">
+              
+              <table class="table">
+                <style>
+                a { color: #94041c; } /* CSS link color */
+                th {
+                background-color: #94041c;
+                color: white;
+                }
+                </style>
+                <thead class="thead-primary">
+                  <tr class="text-center">
+
+                  <th scope="col" width="5%">Sr.</th>
+                  <th scope="col" width="15%">Name</th>
+                  <th scope="col" width="15%">Vehicle Number</th>
+                  <th scope="col" width="30%">Rules Violated</th>
+                  <th scope="col" width="15%">Fine Amount</th>
+                  <th scope="col" width="10%">E-challan</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item_menu in menu %}
+          
+            <tr class="text-center mx-auto cardbody hovernow border border-danger" style="padding:3em;height:100px;margin:3em;">
+                <td scope="row">{{ forloop.counter }}</td>
+                <td>{{ item_menu.item_name }}</td>
+                <td>{{ item_menu.quantity }}</td>
+                <td>Rs. {{ item_menu.price }}</td>>
+                <td><a href="/add/item/{{ item_menu.id }}/{{ item_menu.hostel_num }}"><span  class="icon-shopping_cart" color="#ff0000"></span></a></td>
+                    
+            </tr>
+          
+        {% endfor %}
+        </tbody>
+    </table>
+
+    </section>
+
+  </body>
+<!-- <br> -->
+<!-- <div class="container mx-auto ">
+        <div class="jumbotron hovernow">
+          <div class="row">
+            <div class="col-8">
+              <h2>Contacts:</h2>
+        <ul style="list-style-type:none;">
+          <li>Maninder Singh: +91-9802923101
+          <li>Gurpreet Singh  : +91-9921312141 
+          <li>Mohit Kumar  : +91-7011123101
+        </ul>
+            </div>
+            <div class="col-4">
+              <br>
+              <br>
+              <a href="mailto:hostelbuddy2021@gmail.com"><i class="fa fa-envelope" style="font-size:48px;color:#94041C"></i></a>
+            </div>
+          </div>
+        </div>
+        </div> -->
+  
+  
+{% endblock content %}
+

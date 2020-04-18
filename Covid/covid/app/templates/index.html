@@ -1,0 +1,191 @@
+{% extends 'homepage/base.html' %}
+
+{% load static %}
+{% block navitems %}
+{% if user.is_authenticated and perms.app.change_available_items %}
+<ul class="navbar-nav ml-auto">
+<li class="nav-item active"><a href="{% url 'menu_today' user.username %}" class="nav-link">Today's Menu</a></li>
+<li class="nav-item active"><a href="{% url 'totalsale' %}" class="nav-link">Total Sale</a></li>
+<li><a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout <strong>{{user.username}}</strong></a>
+    <form class="" id="logout" action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden"  value="">
+    </form></li>
+</ul>
+{% elif user.is_authenticated and perms.app.change_student %}
+<ul class="navbar-nav ml-auto">
+<li><a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout <strong>{{user.username}}</strong></a>
+    <form class="" id="logout" action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden"  value="">
+    </form></li>
+</ul>
+{% else %}
+<ul class="navbar-nav ml-auto">
+<li class="nav-item"><a href="{% url 'account' %}" class="nav-link">My Account</a></li>
+<li class="nav-item cta cta-colored"><a href="{% url 'cart' %}" class="nav-link"><span class="icon-shopping_cart"></span> Cart </a></li>
+<li class="nav-item active"><a href="{% url 'user_orders_view' %}" class="nav-link">My orders</a></li>
+
+
+
+
+<li><a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout <strong>{{user.username}}</strong></a>
+    <form class="" id="logout" action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden"  value="">
+    </form></li>
+</ul>
+{% endif %}
+{% endblock navitems %}
+{% block content %}
+  <body class="goto-here">
+  {% if user.is_authenticated and perms.app.change_available_items %}
+
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center mb-3 pb-3">
+          <div class="col-md-12 heading-section text-center ftco-animate">
+            <br>
+            <h2 class="mb-4">List Of Orders</h2>
+            </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 ftco-animate">
+            <div class="cart-list">
+              <table class="table">
+                <style>
+                th {
+                background-color: #94041c;
+                color: white;
+                }
+                </style>
+                <thead class="thead-primary">
+                  <tr class="text-center">
+                    <th scope="col" width="2%">Sr.</th>
+                    <th scope="col" width="15%">Order Status</th>
+                    <th scope="col" width="15%">Order Number</th>
+                    <th scope="col" width="15%">Student Roll No.</th>
+                    <th scope="col" width="20%">Timestamp</th>
+                    <th scope="col" width="20%">Order Details</th>
+                    <th scope="col" width="28%">Order Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% if orders %}
+                  {% for item in orders %}
+                    <tr class="text-center mx-auto cardbody hovernow border border-danger" style="padding:3em;height:100px;margin:3em;">
+                      <td scope="row">{{ forloop.counter }}</td>
+                      <td>
+                        {% if item.order_done == True %}
+                          <i class="fa fa-check"></i>
+                        {% else %}
+                          </i><a href="/order/{{ item.id }}/done"><i class="fa fa-times"></i></a>
+                        {% endif %}
+                      </td>
+                      <td>{{ item.id }}</td>
+                      <td>{{ item.order_client }}</td>
+                      <td>{{ item.order_timestamp  }} </td>
+                      <td>
+                        {% for ite in item.item.all %}
+                          <li>{{ ite.itemtype.item_name }} ({{ite.quantity}})</li>
+                          {% endfor %}
+                      </td>
+                      <td>Rs. {{ item.order_price }}</td>
+                    </tr>
+                  {% endfor %}
+                {% endif %}
+              </tbody>
+          </table>
+            </div>
+          </div>
+        </div>
+          </div>
+      </div>
+    </section>
+
+  {% elif user.is_authenticated and perms.app.change_student %}
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center mb-3 pb-3">
+          <div class="col-md-12 heading-section text-center ftco-animate">
+            <br>
+            </section>
+      <section>
+        <div class="container">
+        <div class="row justify-content-center mb-30 pb-30">
+          <div class="col-md-12 heading-section text-center ftco-animate">
+            <form class="form-center my-2" action="{% url 'search' %}" method="GET">
+
+        <input
+
+          class="form-control search-box"
+          type="search"
+          placeholder="Enter name of student"
+          name="search_term"
+          value="{{search_term}}"
+        />
+      </form></h6>
+        </div>
+      </div>
+        <div class="row justify-content-center">
+      <div class="col-xl-100">
+            <div class="row mt-5 pt-3">
+              <div class="col-md-12 d-flex mb-5">
+                <div class="cart-detail cart-total p-3 p-md-4">
+                </div>
+              </div>
+            </div>
+      </div>
+    </section>
+  {% else %}
+    <section class="ftco-section">
+      
+    	<div class="container">
+				<div class="row justify-content-center mb-3 pb-3">
+          <div class="col-md-12 heading-section text-center ftco-animate">
+          	<br>
+            <h1>Available Hostels:</h1>
+
+        
+            <div class="cart-list">
+              <table class="table">
+                <style>
+                th{
+                background-color: #94041c;
+                color: white;
+                }
+                </style>
+                <thead class="thead-primary">
+                  <tr class="text-center">
+                    <th scope="col" width="20%">Hostel No.</th>
+                    <th scope="col" width="60%">Name</th>
+                    <th scope="col" width="20%"></th>
+                  </tr>
+                </thead>
+              <tbody>
+                {% for hostel in Hostel %}
+                  <tr class="text-center mx-auto cardbody hovernow border border-danger" style="padding:3em;height:100px;margin:3em;">
+                    <td scope="row">{{ forloop.counter }}</td>
+                    <td>{{ hostel }}</td>
+                    <td>
+                      <style>
+                      a { color: #94041c; } /* CSS link color */
+                      </style>
+                      <a href="{% url 'menu' hostel.hostel_num%}">View Menu</a></td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+              </table>
+             </div>
+          </div>
+        </div>
+        </div>
+        </div>
+    </section>
+{% endif %}
+
+  </body>
+  {% endblock content %}
+</html>

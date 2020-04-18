@@ -1,0 +1,39 @@
+{% extends 'mainpage/master.html' %}
+{% load static %}
+{% block navitems %}
+<ul class="navbar-nav ml-auto">
+  <li><a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout <strong>{{user.username}}</strong></a>
+      <form class="" id="logout" action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden"  value="">
+      </form></li>
+<!--   {% if user.is_authenticated and perms.complaints.change_complaint %}
+  <li><a class="nav-item nav-link" href="{% url 'allcomplaints' %}">View All Complaints</a></li>
+  <li><a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout <strong>{{user.username}}</strong></a>
+    <form class="" id="logout" action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden"  value="">
+    </form></li>
+
+
+    {% elif user.is_authenticated %}
+    <li><a class="nav-item nav-link" href="{% url 'create' %}"><span class="oi oi-plus"></span></a></li>
+    <li><a class="nav-item nav-link" href="{% url 'allcomplaints' %}">View All Complaints</a></li>
+    <li><a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout <strong>{{user.username}}</strong></a>
+      <form class="" id="logout" action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden"  value="">
+      </form></li>
+
+      {% else %}
+      <li class="nav-tem active">
+        <a class="nav-item nav-link" href="{% url 'signup' %}">Sign Up</a>
+      </li>
+
+      <li class="nav-tem active">
+        <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+      </li>
+      {% endif %} -->
+{% endblock navitems %}
+{% block content %}
+{% endblock content %}

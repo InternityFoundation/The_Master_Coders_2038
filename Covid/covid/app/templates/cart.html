@@ -1,0 +1,88 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+{% block navitems %}
+<ul class="navbar-nav ml-auto">	          
+  <li class="nav-item"><a href="{% url 'account' %}" class="nav-link">My Account</a></li>
+  <li><a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout <strong>{{user.username}}</strong></a>
+    <form class="" id="logout" action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden"  value="">
+    </form></li>
+</ul>
+{% endblock navitems %}
+{% block content %}
+<style>
+                    a { color: #FF0000; } /* CSS link color */
+                th {
+                background-color: #b10000;
+                color: white;
+                }
+             </style>
+<br>
+<br>
+    <section class="ftco-section ftco-cart">
+			<div class="container">
+				<div class="row">
+    			<div class="col-md-12 ftco-animate">
+    				<div class="cart-list">
+    					
+	    					<table class="table">
+	    						<style>
+                th {
+                background-color: #b10000;
+                color: white;
+                }
+                </style>
+						    	<thead class="thead-primary">
+						      		<tr class="text-center">
+						      			<th></th>
+						      			<th>Sr. no.</th>
+						      			<th>Hostel Name</th>
+						                <th>Product name</th>
+						                <th>Quantity</th>
+								        <th>Price</th>
+								        <th>Total</th>
+						      		</tr>
+						    	</thead>
+						    <tbody>
+						      <tr class="text-center">
+{% with name="A" %}
+						        {% if Item %}
+				                    {% for item in Item %}
+				                        <tr class="text-center mx-auto cardbody hovernow border border-danger" style="padding:3em;height:100px;margin:3em;">
+				                        	<td class="product-remove"><a href="{% url 'remove_item' item.itemtype.id %}"><span class="ion-ios-close"></span></a></td>
+				                        	<td scope="row">{{ forloop.counter }}</td>
+				                        	<td>{{ item.itemtype.Hostel }}</td>
+				                        	{% with name=item.itemtype.Hostel %}
+			                            <td>{{ item.itemtype.item_name }}</td>
+			                            <td>{{ item.quantity }}</td>
+			                            <td>Rs. {{ item.price }}</td>
+			                            <td>Rs. {{ item.total }}</td>
+				                        </tr>
+				                        {% endwith %}
+				                    {% endfor %}
+				                {% endif %}
+						      </tr><!-- END TR-->
+						    </tbody>
+						  </table>
+					  </div>
+    			</div>
+    		</div>
+    			<h4 style="text-align:center">Overall price:Rs. {{ price_all }}</h4>
+            <div class="mt-2 col-md-12"></div>
+            <div style="text-align: center;">
+                <a href="{% url 'make_order'  %}"><input class="btn btn-danger btn-lg btn-block" type="button" value="Make order">
+                </a>
+            </div>
+{% endwith %}
+            <div class="mt-2 col-md-12"></div>
+            <div style="text-align: center;">
+                <a href="{% url 'clear_cart' %}"><input class="btn-outline-danger btn-sm" type="button" value="Delete order">
+                </a>
+            </div>
+        </div>
+		</section>
+  </body>
+  
+  {% endblock content %}
+</html>

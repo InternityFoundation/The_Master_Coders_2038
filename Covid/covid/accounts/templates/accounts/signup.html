@@ -1,0 +1,34 @@
+{% extends 'mainpage/master.html' %}
+{% block content %}
+{% if error %}
+<div class="alert alert-danger" role="alert">
+  {{error.text}}
+</div>
+{% endif %}
+<div class="mx-auto jumbotron hovernow border border-danger" style="padding:2em;width:370px; height:400px;margin:2em;">
+  <h2>Create Account</h2>
+  <form action="{% url 'signup' %}" method="POST">
+    {% csrf_token %}
+    
+    <div class="form-group">
+      Username:
+      <br>
+      <input type="text" name="username">
+    </div>
+    <div class="form-group">
+      Password:
+      <br>
+      <input type="password" name="password1">
+    </div>
+    <div class="form-group">
+      Confirm Password:
+      <br>
+      <input type="password" name="password2">
+    </div>
+    <div class="mt-2 col-md-12"></div>
+    <div style="text-align: center;">
+    <input class="btn btn-danger btn-lg btn-block" type="submit" value="Sign up!">
+  </form>
+</div>
+
+{% endblock content %}

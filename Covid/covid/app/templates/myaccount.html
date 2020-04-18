@@ -1,0 +1,68 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+{% block navitems %}
+<ul class="navbar-nav ml-auto">
+  <li class="nav-item cta cta-colored"><a href="{% url 'cart' %}" class="nav-link"><span class="icon-shopping_cart"></span> Cart </a></li>
+  <li class="nav-item active"><a href="{% url 'user_orders_view' %}" class="nav-link">My orders</a></li>
+  <li><a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout <strong>{{user.username}}</strong></a>
+    <form class="" id="logout" action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden"  value="">
+    </form></li>
+</ul>
+{% endblock navitems %}
+{% block content %}
+<style>
+                    a { color: #94041c; } /* CSS link color */
+                th {
+                background-color: #94041c;
+                color: white;
+                }
+</style>
+    <section class="ftco-section">
+
+    <div class="mx-auto cardbody hovernow border border-success" style="padding:3em;width:400px; height:400px;margin:4em;">
+                  <h3 class="billing-heading mb-4">Account Details</h3>
+
+                      {% if student %}
+                      {% for use in student %}
+
+                      <p class="d-flex">
+                    <span>Username : </span>
+                    <span>{{user.username}}</span>
+                  </p>
+                      <p class="d-flex">
+                    <span>Name : </span>
+                    <span>{{use.name}}</span>
+                  </p>
+                  <p class="d-flex">
+                    <span>Mobile : </span>
+                    <span>+91-{{use.phone}}</span>
+                  </p>
+                  <p class="d-flex">
+                    <span>E-mail Address : </span>
+                    <span>{{use.email}}</span>
+                  </p>
+
+                  <p class="d-flex total-price">
+                    <span>Wallet Balance : </span>
+                    <span>Rs. {{use.balance}}</span>
+                  </p>
+                  {% endfor %}
+                  {% endif %}
+                  <div class="mt-2 col-md-12"></div>
+            <div style="text-align: center;">
+                <a href="{% url 'details'  %}"><input class="btn btn-danger btn-lg btn-block" type="button" value="Edit Details">
+                </a>
+            </div>
+                  
+                </div>
+              </div>
+            </div></div>
+</section>
+
+
+
+  </body>
+  {% endblock content %}
+</html>

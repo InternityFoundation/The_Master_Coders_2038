@@ -1,0 +1,85 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+{% block navitems %}
+<ul class="navbar-nav ml-auto">
+  <li class="nav-item"><a href="{% url 'account' %}" class="nav-link">My Account</a></li>
+  <li class="nav-item cta cta-colored"><a href="{% url 'cart' %}" class="nav-link"><span class="icon-shopping_cart"></span> Cart </a></li>
+  <li><a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout <strong>{{user.username}}</strong></a>
+    <form class="" id="logout" action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden"  value="">
+    </form></li>
+</ul>
+{% endblock navitems %}
+{% block content %}
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center mb-3 pb-3">
+          <div class="col-md-12 heading-section text-center ftco-animate">
+            <br>
+            <h3>Your Order History : </h3>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert" style="text-align:center">
+                <h6>{{ message }}</h6>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="cart-list">
+              <table class="table">
+                <style>
+                    a { color: #94041c; } /* CSS link color */
+                th {
+                background-color: #94041c;
+                color: white;
+                }
+                </style>
+                <thead class="thead-primary">
+                  <tr class="text-center">
+            <th scope="col" width="2%">Sr.</th>
+            <th scope="col" width="15%">Order Number</th>
+            <th scope="col" width="23%">Timestamp</th>
+            <th scope="col" width="15%">Hostel</th>
+            <th scope="col" width="20%">Order Details</th>
+            <th scope="col" width="15%">Order Amount</th>
+            <th scope="col" width="10%">Order Status</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% if orders %}
+          {% for item in orders %}
+            <tr class="text-center">
+                <td scope="row">{{ forloop.counter }}</td>
+                <td>{{ item.id }}</td>
+                <td>{{ item.order_timestamp  }} </td>
+                <td>{{ item.hos }}</td>
+                <td>
+                  {% for ite in item.item.all %}
+                    <li>{{ ite.itemtype.item_name }} ({{ite.quantity}})</li>
+                  {% endfor %}
+                </td>
+
+                <td>Rs. {{ item.order_price }}</td>
+                <td>
+                  {% if item.order_done == True %}
+                    <i class="fa fa-check"></i>
+                  {% else %}
+                    <i class="fa fa-times"></i>
+                  {% endif %}
+                </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <h2> You don't have ANY orders. It's time to change it!</h2>
+        {% endif %}
+        </tbody>
+    </table>
+
+    </section>
+
+
+
+  </body>
+  {% endblock content %}
+</html>
